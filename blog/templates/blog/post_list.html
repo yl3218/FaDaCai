@@ -1,38 +1,35 @@
+{% extends "blog/base.html" %}
 {% load staticfiles %}
-<html>
+{% block title %}<title>Django 查看所有評分</title>{% endblock %}
 
-<head>
-    <title>Django 部落格</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% block link %}
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
 
-</head>
-
-<body>
-    <div class="page-header">
-        <h1><a href="">Django 部落格</a></h1>
-    </div>
-    <div class="content container">
-        <div class="row">
-            <div class="col-md-8">
-                {% for post in posts %}
-                <div class="post">
-                    <div class="date">
-                        <p>發佈時間: {{ post.published_date }}</p>
-                    </div>
-                    <h1>
-                        <p>課程名稱：{{ post.title }}</p>
-                    </h1>
-                    <p>授課教授：{{ post.teacher }}</p>
-                    <p>修課學期：{{ post.class_time }}</p>
-                    <p>評分：{{ post.grade }}</p>
-                    <p>評語：{{ post.comment }}</p>
+{% block content %}
+<div class="page-header">
+    <h1><a href="">Django 查看所有評分</a></h1>
+</div>
+<div class="content container">
+    <div class="row">
+        <div class="col-md-8">
+            {% for post in posts %}
+            <div class="post">
+                <div class="date">
+                    <p>發佈時間: {{ post.published_date }}</p>
                 </div>
-                {% endfor %}
+                <h1>
+                    <p>課程名稱：{{ post.title }}</p>
+                </h1>
+                <p>授課教授：{{ post.teacher }}</p>
+                <p>修課學期：{{ post.class_time }}</p>
+                <p>評分：{{ post.grade }}</p>
+                <p>評語：{{ post.comment }}</p>
             </div>
+            {% endfor %}
         </div>
     </div>
-</body>
-
-</html>
+</div>
+{% endblock %}

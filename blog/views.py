@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup
 import urllib
 import re
 import html
+from django.db.models import Q
 
 # Create your views here.
 
@@ -222,3 +223,16 @@ def detail(request, detailid=None):
 
     # cContent反轉譯，且由於巴哈有延遲載入，因此src屬性名稱不同需替換
     return render(request, "blog/detail.html", locals())
+
+
+def search(request):
+
+    if request.method == "POST":
+        print(request.POST.get('condition'))
+
+        posts = Post.objects.filter(
+            Q(teacher__contains=request.POST.get('condition')) | Q(title__contains=request.POST.get('condition')))
+    else:
+        posts = None
+
+    return render(request, "blog/post_search.html", {'posts': posts})

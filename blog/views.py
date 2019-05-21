@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.utils import timezone
-from .models import Post, Course, Tag
+from .models import Post, Course, Tag, Appeal
 from blog.models import gamee, User
 from . import models
 from django.http import HttpResponse
@@ -236,3 +236,27 @@ def search(request):
         posts = None
 
     return render(request, "blog/post_search.html", {'posts': posts})
+
+
+def appeal_list(request):
+    appeals = Appeal.objects.filter(
+        created__lte=timezone.now()).order_by('created')
+
+    return render(request, 'blog/appeal_list.html', {'appeals': appeals})
+
+
+def appeal_create(request):
+    if request.method == "POST":
+        # print(request.POST.get('title'))
+        new_name = request.POST.get('name')
+        new_code = request.POST.get('code')
+        new_depiction = request.POST.get('depiction')
+        new_number = len(Appeal.objects.filter())
+        new_appeal = Appeal(name=new_name, code=new_code,
+                            number=new_number, depiction=new_depiction)
+
+        new_appeal.save()
+        new_appeal.publish()
+        return redirect('appeal_list')
+
+    return render(request, 'blog/appeal_create.html', {})

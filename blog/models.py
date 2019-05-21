@@ -59,7 +59,15 @@ class Appeal(models.Model):
     number = models.IntegerField(verbose_name='編號')
     depiction = models.TextField()
     created = models.DateTimeField(auto_now_add=True, editable=False)
+    status = models.CharField(max_length=255, default="處理中")
     #token = models.UUIDField(db_index=True, default=uuid.uuid4)
+
+    def publish(self):
+        self.created = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.name
 
 
 class gamee(models.Model):
